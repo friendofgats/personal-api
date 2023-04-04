@@ -1,5 +1,8 @@
-use rocket::serde::json::{json, Value};
+use actix_web::{http::header::ContentType, HttpResponse};
 
-pub fn home() -> Value {
-    json!({"message": String::from("Welcome to my API"), "body": {}})
+pub fn home() -> HttpResponse {
+    HttpResponse::Ok()
+        .content_type(ContentType::plaintext())
+        .insert_header(("X-Hdr", "sample"))
+        .json("Welcome to my API")
 }

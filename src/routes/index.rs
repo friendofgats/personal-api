@@ -1,8 +1,8 @@
-use rocket::serde::json::Value;
+use actix_web::{get, HttpResponse};
 
 use crate::services;
 
 #[get("/")]
-pub fn index() -> Value {
+async fn index() -> HttpResponse {
     services::index::home()
 }

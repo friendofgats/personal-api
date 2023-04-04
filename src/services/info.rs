@@ -1,12 +1,11 @@
+use actix_web::{http::header::ContentType, HttpResponse};
 use api::{
     models::models::{CreateInfo, Info, NewInfo, UpdateInfo},
     *,
 };
 use diesel::prelude::*;
 
-use rocket::serde::json::{json, Value};
-
-pub fn get_info(req_section: String, mut req_verbosity: i32) -> Value {
+pub fn get_info(req_section: String, mut req_verbosity: i32) -> HttpResponse {
     use api::schema::information::dsl::*;
     if req_verbosity > 10 || req_verbosity < 1 {
         req_verbosity = 10
@@ -19,10 +18,14 @@ pub fn get_info(req_section: String, mut req_verbosity: i32) -> Value {
         .first::<Info>(connection)
         .optional()
         .expect("Error loading information");
-    json!(results)
+
+    HttpResponse::Ok()
+        .content_type(ContentType::plaintext())
+        .insert_header(("X-Hdr", "sample"))
+        .json(results)
 }
 
-pub fn add_info(new_info: &CreateInfo) -> Value {
+pub fn add_info(new_info: &CreateInfo) -> HttpResponse {
     use api::schema::information;
 
     let connection = &mut establish_connection_pg();
@@ -38,10 +41,13 @@ pub fn add_info(new_info: &CreateInfo) -> Value {
         .get_result::<Info>(connection)
         .expect("Error saving new info");
 
-    json!(created_info)
+    HttpResponse::Ok()
+        .content_type(ContentType::plaintext())
+        .insert_header(("X-Hdr", "sample"))
+        .json(created_info)
 }
 
-pub fn update_info(update_info: &UpdateInfo) -> Value {
+pub fn update_info(update_info: &UpdateInfo) -> HttpResponse {
     use api::schema::information::dsl::*;
 
     let connection = &mut establish_connection_pg();
@@ -72,5 +78,8 @@ pub fn update_info(update_info: &UpdateInfo) -> Value {
             .get_result::<Info>(connection)
             .expect("Error updating info");
 
-    json!(updated_info)
+    HttpResponse::Ok()
+        .content_type(ContentType::plaintext())
+        .insert_header(("X-Hdr", "sample"))
+        .json(updated_info)
 }
