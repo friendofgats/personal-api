@@ -14,7 +14,7 @@ pub struct GetInfoParams {
     verbosity: i32,
 }
 
-#[get("/info?{section}&{verbosity}")]
+#[get("/info")]
 async fn get_info(info: web::Query<GetInfoParams>) -> HttpResponse {
     services::info::get_info(info.section.to_string(), info.verbosity)
 }
