@@ -19,7 +19,10 @@ async fn main() -> std::io::Result<()> {
         "127.0.0.1"
     }
     .to_string();
-
+    let port: u16 = env::var("PORT")
+        .unwrap_or("8000".to_string())
+        .parse()
+        .unwrap();
     HttpServer::new(move || {
         let cors = Cors::default()
             .allowed_origin(&portfolio_ui_url)
@@ -34,7 +37,7 @@ async fn main() -> std::io::Result<()> {
             .service(get_info)
             .service(update_info)
     })
-    .bind((ip, 8000))?
+    .bind((ip, port))?
     .run()
     .await
 }
