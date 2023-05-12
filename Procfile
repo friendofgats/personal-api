@@ -1,1 +1,1 @@
-web: target/release/ethanheyrman-api $PORT
+web: target/release/ethanheyrman-api
