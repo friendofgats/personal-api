@@ -18,7 +18,6 @@ pub fn get_info(req_section: String, mut req_verbosity: i32) -> HttpResponse {
         .first::<Info>(connection)
         .optional()
         .expect("Error loading information");
-
     HttpResponse::Ok()
         .content_type(ContentType::plaintext())
         .insert_header(("X-Hdr", "sample"))
@@ -53,6 +52,7 @@ pub fn update_info(update_info: &UpdateInfo) -> HttpResponse {
     let connection = &mut establish_connection_pg();
     let existing_info = information
         .filter(section.eq(update_info.section.clone().unwrap()))
+        .filter(verbosity.eq(update_info.verbosity.clone().unwrap()))
         .limit(1)
         .load::<Info>(connection)
         .expect("Cannot fetch section info");
