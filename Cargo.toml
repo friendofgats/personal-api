@@ -1,5 +1,5 @@
 [package]
-name = "api"
+name = "ethanheyrman-api"
 version = "0.1.0"
 edition = "2021"
 
@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 actix-cors = "0.6.4"
 actix-web = "4"
+cargo-shuttle = "0.16.0"
 diesel = { version = "2.0.0", features = ["postgres", "r2d2"] }
 dotenvy = "0.15"
 serde = { version = "1.0.152", features = ["derive"] }
