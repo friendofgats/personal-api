@@ -1,1 +1,1 @@
-web: target/release/heroku $PORT
+web: target/release/api $PORT
