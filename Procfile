@@ -1,1 +1,1 @@
-web: ./target/release/main
+web: cargo run
