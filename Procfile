@@ -1,1 +1,1 @@
-web: target/release/ethanheyrman-api
+web: target/release/heroku $PORT
