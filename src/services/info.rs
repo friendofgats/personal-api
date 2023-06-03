@@ -7,8 +7,10 @@ use diesel::prelude::*;
 
 pub fn get_info(req_section: String, mut req_verbosity: i32) -> HttpResponse {
     use api::schema::information::dsl::*;
-    if req_verbosity > 10 || req_verbosity < 1 {
-        req_verbosity = 10
+    if req_verbosity > 5 {
+        req_verbosity = 5
+    } else if req_verbosity < 1 {
+        req_verbosity = 1
     }
     let connection = &mut establish_connection_pg();
     let results: Option<Info> = information

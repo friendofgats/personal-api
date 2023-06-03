@@ -10,6 +10,5 @@
 
 /target
 
-# Temporarily ignore these
-Rocket.toml
+# ignore these
 .env
